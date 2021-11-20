@@ -1,22 +1,3 @@
-terraform {
-  required_providers {
-    hcloud = {
-      source  = "hetznercloud/hcloud"
-      version = "1.32.1"
-    }
-  }
-}
-
-variable "hcloud_token" {
-  sensitive = true # Requires terraform >= 0.14
-}
-
-# Configure the Hetzner Cloud Provider
-provider "hcloud" {
-  token = var.hcloud_token
-}
-
-# Create a new server running debian
 resource "hcloud_server" "serwerek" {
   name        = "serwerek"
   image       = "ubuntu-20.04"
@@ -36,7 +17,7 @@ resource "hcloud_ssh_key" "paszymaja_key" {
   public_key = file("/home/paszymaja/.ssh/id_rsa.pub")
 }
 
-resource "null_resource" "run_script" {
+resource "null_resource" "update_server" {
   depends_on = [hcloud_server.serwerek]
 
   triggers = { status = hcloud_server.serwerek.status }
@@ -60,6 +41,32 @@ resource "null_resource" "run_script" {
   }
 }
 
+resource "null_resource" "install_minecraft" {
+  count      = var.install_minecraft ? 1 : 0
+  depends_on = [hcloud_server.serwerek]
+
+  triggers = { status = hcloud_server.serwerek.status }
+
+  connection {
+    type        = "ssh"
+    private_key = file("secrets/terraform")
+    host        = hcloud_server.serwerek.ipv4_address
+    user        = "root"
+  }
+
+  provisioner "file" {
+    source      = "minecraft.sh"
+    destination = "/tmp/minecraft.sh"
+  }
+
+  provisioner "remote-exec" {
+
+    inline = [
+      "chmod +x /tmp/minecraft.sh",
+      "/tmp/minecraft.sh args",
+    ]
+  }
+}
 output "ip" {
   value = hcloud_server.serwerek.ipv4_address
 }
