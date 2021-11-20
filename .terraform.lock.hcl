@@ -4,7 +4,6 @@
 provider "registry.terraform.io/hashicorp/null" {
   version = "3.1.0"
   hashes = [
-    "h1:SFT7X3zY18CLWjoH2GfQyapxsRv6GDKsy9cF1aRwncc=",
     "h1:vpC6bgUQoJ0znqIKVFevOdq+YQw42bRq0u+H3nto8nA=",
     "zh:02a1675fd8de126a00460942aaae242e65ca3380b5bb192e8773ef3da9073fd2",
     "zh:53e30545ff8926a8e30ad30648991ca8b93b6fa496272cd23b26763c8ee84515",
@@ -25,7 +24,6 @@ provider "registry.terraform.io/hetznercloud/hcloud" {
   constraints = "1.32.1"
   hashes = [
     "h1:RfLu8m+y3fKf5FrDJarSp06KS4R75yZxPy9n+Df5PjM=",
-    "h1:ozet1RE3PXUTi2fWeUnrlZqJypvwHA+noNZBZumV1S4=",
     "zh:043e941caf46b3a37cae5f2f9c1b7ce2b30f0b492bada6f3d8d6a7384f5cb7b2",
     "zh:055835d483dd172e7b0e500f9dd789353e32c9328d51793b8d88451df4e92067",
     "zh:3dd5a0006ab7f464a2bca8c5a46e583c6f09ba66aeff1ca847397b61fc823597",
